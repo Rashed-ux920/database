@@ -1,0 +1,138 @@
+create table supplier(
+  	supID int generated always as identity(start with 1 increment by 1),
+	primary key (supID),
+	sfirstname varchar(50) not null,
+	slastname varchar(50) not null,
+	semail varchar(200) not null,
+    sphonenumber numeric(9,0) not null,
+    slocation varchar(20) default 'Amman',
+    sbankaccount numeric(20,0) not null
+);
+insert into supplier(sfirstname, slastname, semail, sphonenumber, slocation, sbankaccount) values ('rashed', 'alaqrabawy', 'rashedalaqrabawy789@gmail.com', 0796632195, 'Aqaba' , 12345678912345678912);
+insert into supplier(sfirstname, slastname, semail, sphonenumber, slocation, sbankaccount) values ('omar', 'alaqrabawy', 'omaralaqrabawy78@gmail.com', 0795635426, 'Amman' , 12345678972345978912);
+-- update table supplier (set sfirstname = 'Robert' where suoID = 1);
+update supplier set sfirstname = 'ahmad' where supID = 1 and slastname = 'alaqrabawy';
+delete from supplier where supID = 1;
+create table medicine(
+    medicineID int generated always as identity(start with 1 increment by 1) ,
+    primary key (medicineID),
+    cost int not null,
+    description varchar(200) not null
+);
+
+update medicine set cost = 10 where medicineID = 1;
+insert into medicine(cost, description) values (5, 'for headache');
+insert into medicine(cost, description) values (2, 'for headache');
+delete from medicine where medicineID = 1;
+
+create table supply(
+
+    supID int,
+    foreign key(supID) references supplier(supID),
+    medicineID int,
+    foreign key(medicineID) references medicine(medicineID),
+    temptcher varchar(200) not null,
+    primary key (temptcher)
+);
+
+insert into supply(temptcher) values ('25-1');
+insert into supply(temptcher) values ('7');
+update supply set temptcher = '2' where temptcher = '7' ;
+delete from supply where medicineID = 1 and temptcher = '25-1';
+delete from supply where medicineID = 1 or temptcher = '7';
+
+create table employee(
+    emID int generated always as identity(start with 1 increment by 1),
+    primary key(emID),
+    ehour int not null,
+    efirstname varchar(50) not null,  
+    elaststname varchar(50) not null,
+    esalary int not null
+);
+
+insert into employee(ehour, efirstname, elaststname, esalary) values (8, 'mohammed', 'alaqrabawy', 500);
+insert into employee(ehour, efirstname, elaststname, esalary) values (12, 'ahmad', 'alaqrabawy', 450);
+update employee set esalary = 300 where emID = 1;
+delete from employee where empID = 1 and esalary = 500;
+
+create table customer(
+    customerID int generated always as identity(start with 1 increment by 1),
+    primary key (customerID),
+    cphonenumber numeric(9,0) not null,
+    cash int not null,
+    location varchar(50) default 'Aqaba',
+    illness varchar(100) not null
+);
+insert into customer(cphonenumber, cash, location, illness) values (0796465796, 250, 'balqaa', 'bleeding');
+insert into customer(cphonenumber, cash, location, illness) values (0796465795, 250, 'zarqaa', 'heart attack');
+update customer set cphonenumber = 0779000906 where cphonenumber = 0796465796;
+delete from customer where customerID = 1 or cphonenumber = 0796465796;
+
+create table pharmacy(
+    pharmacyID int generated always as identity(start with 1 increment by 1),
+    primary key(pharmacyID),
+    pharmacyfirstname varchar(20) not null,
+    pharmacylastname varchar(20) not null,
+    pharmacylocationcountry varchar(20) default 'Jordan',
+    pharmacylocationcity varchar(20) default 'Aqaba',
+    cash int not null,
+    pharmacyphonenumber numeric(9,0) not null
+);
+insert into pharmacy(pharmacyfirstname, pharmacylastname, pharmacylocationcountry, pharmacylocationcity, cash, pharmacyphonenumber) values ('pharmacy', 'one', 'jordan', 'aqaba', 5000, 0794236515 );
+update pharmacy set cash = 6000 where pharmacyphonenumber = 0794236515;
+delete from pharmacy where cash < 6000;
+create table sale(
+    emID int,
+    foreign key(emID) references employee(emID),
+    pharmacyID int,
+    foreign key(pharmacyID)references pharmacy(pharmacyID),
+    customerID int,
+    foreign key (customerID)references customer(customerID),
+    medicineID int,
+    foreign key(medicineID) references medicine(medicineID),
+	history varchar(50) not null,
+	clock varchar(50) not null,
+    price int not null,
+    quantity int not null
+);
+
+desc;
+-- select * from sale where  emID = 1 and pharmacyID = 1 and customerID = 1 and medicineID = 1;
+
+select * from sale;
+update sale set history = '14/5/2024' where emID = 1 and pharmacyID = 1 and customerID = 1 and medicineID = 1;
+insert into sale( history, clock, price, quantity) values ('15/5/2024','3:00',3 ,1);
+insert into sale( history, clock, price, quantity) values ('15/4/2024','12:00',3 ,10);
+delete from sale where history = '15/4/2024'; 
+drop table supplier;
+drop table medicine; 
+drop table employee;
+drop table customer;
+drop table pharmacy;
+drop table supply;
+drop table sale;
+
+alter table supplier add(suppliermothrsname varchar(50));
+alter table supplier modify(suppliermothrsname varchar(100));
+alter table supplier drop(suppliermothrsname );
+
+alter table medicine add(medicineefaect varchar(50));
+alter table medicine modify(medicineefaect varchar(100));
+alter table medicine drop(medicineefaect );
+
+alter table supply add(nameofmedicine varchar(50));
+alter table supply modify(nameofmedicine varchar(100));
+alter table supply drop(nameofmedicine );
+
+alter table employee add(employeemidelname varchar(50));
+alter table employee modify(employeemidelname varchar(100));
+alter table employee drop(employeemidelname);
+
+
+alter table pharmacy add( pharmacybankaccounte numeric(20,0));
+alter table pharmacy modify(pharmacybankaccounte numeric(30,0));
+alter table pharmacy drop(pharmacybankaccounte);
+
+alter table sale add( salesmanegerID int not null);
+alter table sale modify(salesmanegerID numeric(30,0));
+alter table sale drop(salesmanegerID);

@@ -1,0 +1,17 @@
+create table department (
+    diptid int,
+    deptname varchar(50) not null,
+    primary key (diptid)
+);
+create table instructor(
+    instid int,
+	diptid int, 
+	instfirstname varchar(50),   
+	instlastname varchar(50),
+    instdeptid int,
+    salary numeric(8,2),
+    primary key (instid),
+    foreign key(diptid) references department(diptid)
+);
+to display the all the information 
+SELECT * from supplier;

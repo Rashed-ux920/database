@@ -1,0 +1,23 @@
+drop table name;
+alter table nametable add(dept-decke varchar(50);
+to make a commment use --;
+alter table nametable modify(dept-decke varchar(50);
+alter tablename add costraint  namecostraint primary key(id);
+alter table drop constraint nameofcostraint;
+create table test(
+toyid int 
+,
+toyname varchar(50),
+primary key(toyid)
+);
+thing that related to foreign key 
+what is foreign key primary key from other table
+constraint fkdept foreign key (sdepid) refereces dept(deptid)
+alter table table name add foreign keu sdepid refers dept(depid)
+ster tab;e tablename modify(cell in table varchar(50) not null
+
+
+
+update tablename set col1 =value , col2 = value  where ;
+
+dlete from table name  where id = 1 or id = 2;

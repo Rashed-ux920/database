@@ -1,0 +1,102 @@
+create Table Department(
+    DeptID int GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+    DeptName varchar(50) unique not null,
+    primary key (DeptID));
+
+create table instructor (
+    instID  int ,
+    instFName varchar(50) not null,
+    instLName varchar(50) not null,
+    instDeptID  int,
+    salary numeric(8,2),
+    primary key (instID),
+    foreign key (instDeptID) references department(DeptID));
+
+create table course (
+courseID        int,
+title            varchar(50) not null,
+CourseDeptID      int,
+credits             numeric(1,0),
+primary key (courseID),
+foreign key (CourseDeptID) references department(DeptID));
+
+create table student (
+studID            int,
+StudentFName varchar(50) not null,
+StudentLName varchar(50) not null,
+StudentDeptID      int,
+tot_cred           numeric(3,0) check (tot_cred <=132),
+primary key (studID),
+foreign key (StudentDeptID) references department(DeptID));
+
+create table takes (
+Takes_courseID       int,
+Takes_studentid      int,
+Takes_instId    int,
+semester        numeric(1,0),
+year                numeric(4,0),
+grade             numeric(3,0), 
+primary key (Takes_studentid, Takes_courseID,Takes_instId, semester, year) ,
+foreign key (Takes_studentid) references  student(studID),
+foreign key (Takes_courseID) references Course (courseID),
+foreign key (Takes_instId) references instructor(instID));
+
+--Alter table
+alter table Department Add (Dept_Desc varchar(50));
+alter table Department Modify (Dept_Desc varchar(150));
+alter table Department drop (Dept_Desc);
+
+--Drop Table
+drop table takes ;
+
+insert into Department (DeptName ) values ('CIS');
+insert into Department (DeptName ) values ('BIT');
+insert into Department (DeptName ) values ('MIS');
+insert into Department (DeptName ) values ('Security');
+
+update Department set DeptName ='CIS' where DeptName ='cis' ;
+update Department set DeptName ='IT' where DEPTID = 21;
+
+
+--delete from Department where DEPTID = 21;
+
+insert into instructor Values (2001, 'ISSAM', 'HADID', 1, 500.20);
+insert into instructor Values (2002, 'SAMER', 'AHMAD', 2, 334.40);
+insert into instructor Values (2003, 'RAMI', 'KHAID', 3, 444.45);
+insert into instructor Values (2004, 'ISA', 'ATALH', 1, 550.21);
+
+insert into Student Values(3220101,'Rashid', 'Bahaa', 1, 66);
+insert into Student Values(3220102,'Rani', 'Samer', 1, 99);
+insert into Student Values(3220103,'Radi', 'Ehaab', 1, 21);
+insert into Student Values(3220104,'Rami', 'Murad', 1, 15);
+insert into Student Values(3220105,'Yasmeen', 'Abdlah', 1, 36);
+
+insert into course values (55022, 'Database', 1, 3); 
+insert into course values (55032, 'MIS', 1, 3) ;
+insert into course values (55012, 'C++', 1, 3) ;
+insert into course values (55042, 'Security', 1, 3) ;
+insert into course values (55041, 'Visual Programming', 1, 3); 
+
+
+insert into takes (Takes_courseID, Takes_studentid , Takes_instId, semester , year, grade ) 
+values (55012	,3220101,2001, 1, 2024, 95 ); 
+
+insert into takes (Takes_courseID, Takes_studentid , Takes_instId, semester , year, grade  ) 
+values (55012	,3220102,2003, 1, 2024, 85);   
+
+insert into takes (Takes_courseID, Takes_studentid , Takes_instId, semester , year, grade  ) 
+values (55022,3220104,2001, 1, 2024, 66 );
+
+insert into takes (Takes_courseID, Takes_studentid , Takes_instId, semester , year, grade  ) 
+values (55022,3220104,2001, 1, 2024, 66 );
+
+insert into takes (Takes_courseID, Takes_studentid , Takes_instId, semester , year, grade  ) 
+values (55022,3220101,2001, 1, 2024,45 ) ;
+
+update  takes set grade = 90 where Takes_studentid = 3220105 AND Takes_courseID = 55022 AND year= 2024 AND semester = 1;
+
+select STUDENTFNAME || ' ' || STUDENTLNAME as Student_Name,TOT_CRED from student
+where TOT_CRED >39 AND TOT_CRED < 69;
+update student set TOT_CRED = 132 where STUDID = 3220102
+
+select * from student;

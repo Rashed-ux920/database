@@ -1,0 +1,7 @@
+datatype in sql:
+char(numberofchar);
+varchar(numberofchar);
+int;
+numeric(holl dejet,decemal);
+double;
+float(n);
